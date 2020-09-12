@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.monkey.follow.mapper.SysConfigMapper">
+    <update id="updateNum">
+        update t_config set stop_loss_times = stop_loss_times +1 where id = #{id}
+    </update>
+    <select id="selectByType" resultType="com.monkey.follow.model.SysConfig">
+        select * from t_config where type = #{type} limit 1
+    </select>
+</mapper>
