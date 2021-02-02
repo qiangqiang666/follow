@@ -43,6 +43,11 @@ public class SysConfig {
     private String typeStr;
 
     /**
+     * 币coin : 自身用户的id
+     */
+    private String oneselfUserId;
+
+    /**
      * okex : 地址
      */
     private String address;
@@ -95,5 +100,15 @@ public class SysConfig {
     /**
      * 自定义参数: 跟单开关
      */
-    public  Boolean isFollow;
+    private Boolean isFollow;
+
+    /**
+     * 自定义参数: 范围保障值
+     */
+    private BigDecimal scope;
+
+    /**
+     * 自定义参数 : 持仓变动预警阀值
+     */
+    public Integer scopeNum;
 }

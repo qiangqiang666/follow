@@ -4,7 +4,10 @@
     <update id="updateNum">
         update t_config set stop_loss_times = stop_loss_times +1 where id = #{id}
     </update>
-    <select id="selectByType" resultType="com.monkey.follow.model.SysConfig">
-        select * from t_config where type = #{type} limit 1
-    </select>
+    <update id="updateScope">
+        update t_config set scope = scope +1 where id = #{id}
+    </update>
+    <update id="updateFollow">
+        update t_config set is_follow = #{isFollow}  where id = #{id}
+    </update>
 </mapper>

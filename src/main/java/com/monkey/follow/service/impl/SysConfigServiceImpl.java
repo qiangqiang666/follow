@@ -2,6 +2,7 @@ package com.monkey.follow.service.impl;
 
 import com.monkey.follow.constant.SysConfInterface;
 import com.monkey.follow.enums.ConfigTypeEnum;
+import com.monkey.follow.mapper.ContentMapper;
 import com.monkey.follow.mapper.SysConfigMapper;
 import com.monkey.follow.model.SysConfig;
 import com.monkey.follow.service.SysConfigService;
@@ -22,20 +23,15 @@ import javax.annotation.Resource;
 @Slf4j
 @Service
 public class SysConfigServiceImpl implements SysConfigService {
-    @Value("${okex.config}")
-    private boolean okexConfig;
     @Resource
     private SysConfigMapper sysConfigMapper;
+    @Resource
+    private ContentMapper contentMapper;
 
     @PostConstruct
     public void init() {
         log.info("初始化相关配置开始");
-        SysConfig sysConfig;
-        if (okexConfig){
-            sysConfig = sysConfigMapper.selectByType(ConfigTypeEnum.pro.code());
-        }else{
-            sysConfig = sysConfigMapper.selectByType(ConfigTypeEnum.test.code());
-        }
+        SysConfig sysConfig = sysConfigMapper.selectByPrimaryKey(1);
         SysConfInterface.address = sysConfig.getAddress();
         SysConfInterface.apiKey = sysConfig.getApiKey();
         SysConfInterface.secretKey = sysConfig.getSecretKey();
@@ -51,23 +47,30 @@ public class SysConfigServiceImpl implements SysConfigService {
         SysConfInterface.isStopLoss  = sysConfig.getIsStopLoss();
         SysConfInterface.isFollow = sysConfig.getIsFollow();
         SysConfInterface.stopLossTimes = sysConfig.getStopLossTimes();
+        SysConfInterface.scope = sysConfig.getScope();
+        SysConfInterface.scopeNum = sysConfig.getScopeNum();
+        SysConfInterface.oneselfUserId = sysConfig.getOneselfUserId();
     }
 
     @Override
     public SysConfig updateInitConf() {
         init();
-        SysConfig sysConfig;
-        if (okexConfig){
-            sysConfig = sysConfigMapper.selectByType(ConfigTypeEnum.pro.code());
-        }else{
-            sysConfig = sysConfigMapper.selectByType(ConfigTypeEnum.test.code());
-        }
-        return sysConfig;
+        return sysConfigMapper.selectByPrimaryKey(1);
     }
 
     @Override
     public void updateConf(SysConfig sysConfig) {
         sysConfigMapper.updateByPrimaryKeySelective(sysConfig);
+    }
+
+    @Override
+    public Integer selectContentNum() {
+        return contentMapper.selectByTime();
+    }
+
+    @Override
+    public void clearTime() {
+        contentMapper.deleteByTime();
     }
 
 

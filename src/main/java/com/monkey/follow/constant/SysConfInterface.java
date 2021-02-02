@@ -79,4 +79,19 @@ public final class SysConfInterface {
      */
     public static Boolean isFollow;
 
+    /**
+     * 自定义参数: 范围保障值
+     */
+    public static BigDecimal scope;
+
+    /**
+     * 币coin : 自身用户的id
+     */
+    public static String oneselfUserId;
+
+    /**
+     * 自定义参数 : 持仓变动预警阀值
+     */
+    public static Integer scopeNum;
+
 }

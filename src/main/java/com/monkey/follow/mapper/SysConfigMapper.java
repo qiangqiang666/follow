@@ -8,7 +8,10 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SysConfigMapper extends MyMapper<SysConfig> {
 
-    SysConfig selectByType(@Param("type") Integer type);
 
     void updateNum(@Param("id") Integer id);
+
+    void updateScope(@Param("id") Integer id);
+
+    void updateFollow(@Param("isFollow")int isFollow,@Param("id") Integer id);
 }

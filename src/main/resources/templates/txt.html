@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>配置页</title>
+    <script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/random.js}"></script>
+</head>
+<body>
+<form action="/follow/update" method="post">
+    持仓止损线(单位USDT):<br>
+    <input type="test" name="stopLossNum" id="stopLossNum" th:value="${stopLossNum}">
+    <br>
+    5分钟之内,持仓变动预警阀值(次数):<br>
+    <input type="test" name="scopeNum" id="scopeNum" th:value="${scopeNum}">
+    <br>
+    最近5分钟之内,持仓实时变动次数:<br>
+    <input type="test" id="timeNum" th:value="${timeNum}" disabled> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button id="clearTimeNum">清空次数</button>
+    <br>
+    多(空)倍数,保障范围值:<br>
+    <input type="test" name="scope" id="scope" th:value="${scope}">
+    <br>
+    <input type="submit" value="修改" />
+</form>
+<br>
+<span><h1 >服务状态: <h2 id="status"></h2></h1></span>
+<br>
+<button id="startServer">恢复服务</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="stopServe">停止服务</button>
+</body>
+<script>
+    $('#clearTimeNum').click(function(){
+        $.ajax({
+            type: "GET",
+            url: "/follow/clear",
+            data:JSON.stringify(null),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resData) {
+                alert("清空次数成功");
+            }
+        });
+    });
+    $('#startServer').click(function(){
+        $.ajax({
+            type: "GET",
+            url: "/follow/start",
+            data:JSON.stringify(null),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resData) {
+                alert("服务启动成功");
+            }
+        });
+    });
+    $('#stopServe').click(function(){
+        $.ajax({
+            type: "GET",
+            url: "/follow/stop",
+            data:JSON.stringify(null),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resData) {
+                alert("服务停止成功");
+            }
+        });
+    });
+
+    //每一秒执行一次这个函数
+    var timeTask=setInterval(function(){
+            callFunction();//调用这个方法
+    },2000);
+    //替换图片
+    function callFunction(){
+        $.ajax({
+            type: "GET",
+            url: "/follow/count",
+            data:JSON.stringify(null),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resData) {
+                $("#timeNum").attr("value",resData.timeNum);
+                $("#status").text(resData.status);
+            }
+        });
+    }
+</script>
+</html>

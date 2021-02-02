@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.monkey.follow.mapper.ContentMapper">
+    <delete id="deleteByTime">
+      DELETE FROM t_content where id in (select temp.id from (select t1.id from t_content t1 where t1.create_at >= now()-interval 5 minute) as temp)
+    </delete>
+    <select id="selectByTime" resultType="java.lang.Integer">
+        select  count(*) from t_content where create_at >= now()-interval 5 minute;
+    </select>
+</mapper>

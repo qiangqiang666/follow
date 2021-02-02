@@ -20,23 +20,23 @@ public class ATask {
     @Autowired
     private CoinService coinService;
 
-    /**
-     * 跟单操作
-     */
-    @Scheduled(cron = "*/1 * * * * ?")
-    public void send() {
-        coinService.getLatestOperation(SysConfInterface.typeStr);
-        log.info("The ATask.send task end");
-    }
-
-    /**
-     * 止损操作
-     */
-    @Scheduled(cron = "0 0/1 * * * ?")
-    public void stopLoss() {
-        coinService.stopLoss("3","USD");
-        log.info("The ATask.stopLoss task end");
-    }
+//    /**
+//     * 跟单操作
+//     */
+//    @Scheduled(cron = "*/1 * * * * ?")
+//    public void send() {
+//        coinService.getLatestOperation(SysConfInterface.typeStr);
+//        log.info("The ATask.send task end");
+//    }
+//
+//    /**
+//     * 止损操作
+//     */
+//    @Scheduled(cron = "0 0/1 * * * ?")
+//    public void stopLoss() {
+//        coinService.stopLoss("3","USD");
+//        log.info("The ATask.stopLoss task end");
+//    }
 
     /**
      * 检测遗留仓位,币coin的实盘数据延迟太高,很容易误伤,做不了
